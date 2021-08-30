@@ -1239,3 +1239,110 @@ LogConfig: Setting CVar [[fx.NiagaraAllowRuntimeScalabilityChanges:1]]
 [2021.08.30-16.14.09:351][  0]LogAssetRegistry: Asset discovery search completed in 8.4235 seconds
 [2021.08.30-16.14.09:352][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000004 seconds (updated 0 objects)
 [2021.08.30-16.14.09:352][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2021.08.30-16.44.47:276][735]LogSlate: Window 'Source Control Login' being destroyed
+[2021.08.30-16.45.45:055][778]LogSlate: Window 'Message Log' being destroyed
+[2021.08.30-16.45.45:062][778]LogSlate: Window 'Message Log' being destroyed
+[2021.08.30-16.46.24:242][249]LogFactory: FactoryCreateFile: PackFactory with PackFactory (0 0 D:/EpicGames/UE_5.0EA/FeaturePacks/TP_ThirdPersonBP.upack)
+[2021.08.30-16.46.24:242][249]LogPakFile: PakFile PrimaryIndexSize=189
+[2021.08.30-16.46.24:242][249]LogPakFile: PakFile PathHashIndexSize=101
+[2021.08.30-16.46.24:242][249]LogPakFile: PakFile FullDirectoryIndexSize=152
+[2021.08.30-16.46.24:472][249]SourceControl: Error: fatal: pathspec 'D:/ue5-prototype-sandbox/PrototypeSandbox/Config/DefaultInput.ini' did not match any files
+[2021.08.30-16.46.24:476][249]LogPackFactory: Error: Could not mark D:/ue5-prototype-sandbox/PrototypeSandbox/Config/DefaultInput.ini file for add.
+[2021.08.30-16.46.24:495][249]LogPackFactory: Finished extracting 8 files (including 0 errors).
+[2021.08.30-16.46.24:500][249]LogPackFactory: Copied "../../../Templates/TP_ThirdPersonBP/Content/ThirdPersonBP/ThirdPersonOverview.uasset" to "../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/ThirdPersonOverview.uasset"
+[2021.08.30-16.46.24:505][249]LogPackFactory: Copied "../../../Templates/TP_ThirdPersonBP/Content/ThirdPersonBP/Blueprints/ThirdPersonCharacter.uasset" to "../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Blueprints/ThirdPersonCharacter.uasset"
+[2021.08.30-16.46.24:509][249]LogPackFactory: Copied "../../../Templates/TP_ThirdPersonBP/Content/ThirdPersonBP/Blueprints/ThirdPersonGameMode.uasset" to "../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Blueprints/ThirdPersonGameMode.uasset"
+[2021.08.30-16.46.24:533][249]LogPackFactory: Copied "../../../Templates/TP_ThirdPersonBP/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap.umap" to "../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap.umap"
+[2021.08.30-16.46.24:552][249]LogPackFactory: Copied "../../../Templates/TP_ThirdPersonBP/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap_BuiltData.uasset" to "../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap_BuiltData.uasset"
+[2021.08.30-16.46.26:039][249]SourceControl: Error: The following paths are ignored by one of your .gitignore files:
+[2021.08.30-16.46.26:039][249]SourceControl: Error: PrototypeSandbox/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap_BuiltData.uasset
+[2021.08.30-16.46.26:039][249]SourceControl: Error: Use -f if you really want to add them.
+[2021.08.30-16.46.26:042][249]LogPackFactory: Error: Could not mark ../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap_BuiltData.uasset file for add.
+[2021.08.30-16.46.26:215][249]Cmd: OBJ SAVEPACKAGE PACKAGE="/Game/ThirdPersonBP/ThirdPersonOverview" FILE="../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/ThirdPersonOverview.uasset" SILENT=true
+[2021.08.30-16.46.26:220][249]LogSavePackage: Moving '../../../../../ue5-prototype-sandbox/PrototypeSandbox/Saved/ThirdPersonOverview3F464181400627BAE18F438A8E9CC434.tmp' to '../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/ThirdPersonOverview.uasset'
+[2021.08.30-16.46.26:257][249]AssetCheck: New page: Asset Save: ThirdPersonOverview
+[2021.08.30-16.46.26:257][249]LogContentValidation: Display: Validating Blueprint /Game/ThirdPersonBP/ThirdPersonOverview.ThirdPersonOverview
+[2021.08.30-16.46.31:665][440]LogSlate: Window 'Add Content to the Project' being destroyed
+[2021.08.30-16.46.38:415][687]LogUObjectHash: Compacting FUObjectHashTables data took   0.69ms
+[2021.08.30-16.46.38:522][687]LogNativeClassHierarchy: Verbose: Native class hierarchy updated for 'TimeManagement' in 0.0003 seconds. Added 5 classes and 0 folders.
+[2021.08.30-16.46.38:692][687]LogStaticMesh: StaticMesh /Game/Geometry/Meshes/1M_Cube.1M_Cube should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:695][687]LogStaticMesh: StaticMesh /Game/ThirdPerson/Meshes/LeftArm_StaticMesh.LeftArm_StaticMesh should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:695][687]LogStaticMesh: StaticMesh /Game/ThirdPerson/Meshes/Ramp_StaticMesh.Ramp_StaticMesh should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:695][687]LogStaticMesh: StaticMesh /Game/ThirdPerson/Meshes/RightArm_StaticMesh.RightArm_StaticMesh should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:700][687]LogStaticMesh: StaticMesh /Game/ThirdPerson/Meshes/Linear_Stair_StaticMesh.Linear_Stair_StaticMesh should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:700][687]LogStaticMesh: StaticMesh /Game/Geometry/Meshes/1M_Cube_Chamfer.1M_Cube_Chamfer should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:700][687]LogStaticMesh: StaticMesh /Game/ThirdPerson/Meshes/Bump_StaticMesh.Bump_StaticMesh should be resaved to improve async compilation performance.
+[2021.08.30-16.46.38:735][687]LogAssetEditorSubsystem: Opening Asset editor for World /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap
+[2021.08.30-16.46.38:735][687]Cmd: MAP LOAD FILE="../../../../../ue5-prototype-sandbox/PrototypeSandbox/Content/ThirdPersonBP/Maps/ThirdPersonExampleMap.umap" TEMPLATE=0 SHOWPROGRESS=1 FEATURELEVEL=3
+[2021.08.30-16.46.38:735][687]LightingResults: New page: Lighting Build
+[2021.08.30-16.46.38:735][687]LoadErrors: New page: Loading map: ThirdPersonExampleMap.umap
+[2021.08.30-16.46.38:737][687]LogWorld: UWorld::CleanupWorld for Minimal_Default, bSessionEnded=true, bCleanupResources=true
+[2021.08.30-16.46.38:737][687]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2021.08.30-16.46.38:738][687]MapCheck: New page: Map Check
+[2021.08.30-16.46.38:738][687]LightingResults: New page: Lighting Build
+[2021.08.30-16.46.38:743][687]LogAudio: Display: Audio Device unregistered from world 'None'.
+[2021.08.30-16.46.38:746][687]LogUObjectHash: Compacting FUObjectHashTables data took   0.82ms
+[2021.08.30-16.46.38:747][687]LogAudio: Display: Audio Device (ID: 1) registered with world 'ThirdPersonExampleMap'.
+[2021.08.30-16.46.38:751][687]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
+[2021.08.30-16.46.38:751][687]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2021.08.30-16.46.38:757][687]LogUObjectHash: Compacting FUObjectHashTables data took   0.58ms
+[2021.08.30-16.46.38:759][687]Cmd: MAP CHECKDEP NOCLEARLOG
+[2021.08.30-16.46.38:759][687]MapCheck: Map check complete: 0 Error(s), 0 Warning(s), took 0.086ms to complete.
+[2021.08.30-16.46.38:759][687]LogFileHelpers: Loading map 'ThirdPersonExampleMap' took 0.023
+[2021.08.30-16.46.40:455][771]LogDebuggerCommands: Repeating last play command: Selected Viewport
+[2021.08.30-16.46.40:461][771]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2021.08.30-16.46.40:461][771]PIE: New page: PIE session: ThirdPersonExampleMap (Aug 30, 2021, 6:46:40 PM)
+[2021.08.30-16.46.40:463][771]LogOnline: OSS: Creating online subsystem instance for: NULL
+[2021.08.30-16.46.40:465][771]LogOnline: OSS: TryLoadSubsystemAndSetDefault: Loaded subsystem for module [NULL]
+[2021.08.30-16.46.40:465][771]LogPlayLevel: Creating play world package: /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2021.08.30-16.46.40:482][771]LogPlayLevel: PIE: StaticDuplicateObject took: (0.016805s)
+[2021.08.30-16.46.40:484][771]LogAIModule: Creating AISystem for world ThirdPersonExampleMap
+[2021.08.30-16.46.40:484][771]LogPlayLevel: PIE: World Init took: (0.002283s)
+[2021.08.30-16.46.40:485][771]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/ThirdPersonBP/Maps/ThirdPersonExampleMap.ThirdPersonExampleMap to /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap (0.019650s)
+[2021.08.30-16.46.40:494][771]LogUObjectHash: Compacting FUObjectHashTables data took   1.07ms
+[2021.08.30-16.46.40:495][771]LogAudio: Display: Creating Audio Device:                 Id: 2, Scope: Unique, Realtime: True
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2021.08.30-16.46.40:495][771]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2021.08.30-16.46.40:495][771]LogAudio: Display: AudioDevice MaxSources: 32
+[2021.08.30-16.46.40:496][771]LogAudio: Display: Using built-in audio occlusion.
+[2021.08.30-16.46.40:496][771]LogAudioMixer: Display: Initializing audio mixer.
+[2021.08.30-16.46.40:507][771]LogAudioMixer: Display: 0: FrontLeft
+[2021.08.30-16.46.40:507][771]LogAudioMixer: Display: 1: FrontRight
+[2021.08.30-16.46.40:521][771]LogAudioMixer: Display: Using Audio Device Headphones (Arctis 7 Game)
+[2021.08.30-16.46.40:521][771]LogAudioMixer: Display: Initializing Sound Submixes...
+[2021.08.30-16.46.40:521][771]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2021.08.30-16.46.40:521][771]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2021.08.30-16.46.40:522][771]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called
+[2021.08.30-16.46.40:522][771]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048
+[2021.08.30-16.46.40:523][771]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal()
+[2021.08.30-16.46.40:523][771]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time
+[2021.08.30-16.46.40:524][771]LogInit: FAudioDevice initialized.
+[2021.08.30-16.46.40:524][771]LogAudio: Display: Audio Device (ID: 2) registered with world 'ThirdPersonExampleMap'.
+[2021.08.30-16.46.40:536][771]LogLoad: Game class is 'GameModeBase'
+[2021.08.30-16.46.40:538][771]LogWorld: Bringing World /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap.ThirdPersonExampleMap up for play (max tick rate 0) at 2021.08.30-17.46.40
+[2021.08.30-16.46.40:538][771]LogWorld: Bringing up level for play took: 0.002422
+[2021.08.30-16.46.40:538][771]LogOnline: OSS: Creating online subsystem instance for: :Context_3
+[2021.08.30-16.46.40:548][771]LogNativeClassHierarchy: Verbose: Native class hierarchy updated for 'MovieSceneCapture' in 0.0004 seconds. Added 20 classes and 0 folders.
+[2021.08.30-16.46.40:550][771]PIE: Server logged in
+[2021.08.30-16.46.40:551][771]PIE: Play in editor total start time 0.093 seconds.
+[2021.08.30-16.46.41:643][807]LogMeshUtilities: Finished distance field build in 2.9s - 42x84x63 sparse distance field, 0.3Mb total, 0.0Mb always loaded, 88% occupied, 6 triangles, Ramp_StaticMesh
+[2021.08.30-16.46.42:842][847]LogMeshUtilities: Finished distance field build in 4.1s - 161x56x42 sparse distance field, 0.5Mb total, 0.0Mb always loaded, 85% occupied, 9 triangles, LeftArm_StaticMesh
+[2021.08.30-16.46.42:869][848]LogMeshUtilities: Finished distance field build in 4.1s - 161x56x42 sparse distance field, 0.5Mb total, 0.0Mb always loaded, 85% occupied, 9 triangles, RightArm_StaticMesh
+[2021.08.30-16.46.53:243][216]LogMeshUtilities: Finished distance field build in 14.5s - 259x259x42 sparse distance field, 4.7Mb total, 0.1Mb always loaded, 100% occupied, 42 triangles, TemplateFloor
+[2021.08.30-16.47.01:119][487]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2021.08.30-16.47.01:119][487]LogWorld: BeginTearingDown for /Game/ThirdPersonBP/Maps/UEDPIE_0_ThirdPersonExampleMap
+[2021.08.30-16.47.01:119][487]LogWorld: UWorld::CleanupWorld for ThirdPersonExampleMap, bSessionEnded=true, bCleanupResources=true
+[2021.08.30-16.47.01:119][487]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2021.08.30-16.47.01:174][487]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2021.08.30-16.47.01:175][487]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2021.08.30-16.47.01:179][487]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2021.08.30-16.47.01:180][487]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called
+[2021.08.30-16.47.01:181][487]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called
+[2021.08.30-16.47.01:185][487]LogUObjectHash: Compacting FUObjectHashTables data took   0.65ms
+[2021.08.30-16.47.01:189][487]LogUObjectHash: Compacting FUObjectHashTables data took   0.24ms
+[2021.08.30-16.47.01:213][488]LogPlayLevel: Display: Destroying online subsystem :Context_3
