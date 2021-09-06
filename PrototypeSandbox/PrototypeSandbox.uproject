@@ -3,6 +3,17 @@
 	"EngineAssociation": "5.0EA",
 	"Category": "",
 	"Description": "",
+	"Modules": [
+		{
+			"Name": "PrototypeSandbox",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"UMG"
+			]
+		}
+	],
 	"Plugins": [
 		{
 			"Name": "Bridge",
