@@ -3,41 +3,8 @@
 
 #include "MainMenu.h"
 #include "Components/Button.h"
-
-void UMainMenu::SetMenuInterface(IMenuInterface* NewMenuInterface)
-{
-	MenuInterface = NewMenuInterface;
-}
-
-void UMainMenu::Setup()
-{
-	AddToViewport();
-	bIsFocusable = true;
-
-	UWorld* world = GetWorld();
-	if (!ensure(world != nullptr)) return;
-	APlayerController* playerController = world->GetFirstPlayerController();
-	
-	FInputModeUIOnly mode;
-	mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-	mode.SetWidgetToFocus(TakeWidget());
-
-	playerController->SetInputMode(mode);
-	playerController->SetShowMouseCursor(true);
-}
-
-void UMainMenu::OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld)
-{
-	if (!ensure(InWorld != nullptr)) return;
-	APlayerController* playerController = InWorld->GetFirstPlayerController();
-
-	FInputModeGameOnly mode;
-	mode.SetConsumeCaptureMouseDown(true);
-
-	playerController->SetInputMode(mode);
-	playerController->SetShowMouseCursor(false);
-	RemoveFromViewport();
-}
+#include "Components/EditableTextBox.h"
+#include "Components/WidgetSwitcher.h"
 
 bool UMainMenu::Initialize()
 {
@@ -45,9 +12,17 @@ bool UMainMenu::Initialize()
 
 	if (!ensure(HostButton != nullptr)) return false;
 	if (!ensure(JoinButton != nullptr)) return false;
+	if (!ensure(QuitButton != nullptr)) return false;
+	if (!ensure(MainMenu != nullptr)) return false;
+	if (!ensure(JoinMenu != nullptr)) return false;
+	if (!ensure(BackButton != nullptr)) return false;
+	if (!ensure(JoinMenuButton != nullptr)) return false;
 
 	HostButton->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
 	JoinButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
+	QuitButton->OnClicked.AddDynamic(this, &UMainMenu::Quit);
+	BackButton->OnClicked.AddDynamic(this, &UMainMenu::CloseJoinMenu);
+	JoinMenuButton->OnClicked.AddDynamic(this, &UMainMenu::OpenJoinMenu);
 
 	return true;
 }
@@ -63,5 +38,28 @@ void UMainMenu::JoinServer()
 {
 	if (!ensure(MenuInterface != nullptr)) return;
 
-	MenuInterface->Join("localhost");
+	// TODO empty string handling
+	MenuInterface->Join(ServerAddressTextBox->GetText().ToString());
+}
+
+void UMainMenu::OpenJoinMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr)) return;
+	if (!ensure(JoinMenu != nullptr)) return;
+
+	MenuSwitcher->SetActiveWidget(JoinMenu);
+}
+
+void UMainMenu::CloseJoinMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr)) return;
+	if (!ensure(MainMenu != nullptr)) return;
+
+	MenuSwitcher->SetActiveWidget(MainMenu);
+}
+
+void UMainMenu::Quit()
+{
+	if (!ensure(MenuInterface != nullptr)) return;
+	MenuInterface->Quit();
 }

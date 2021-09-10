@@ -3,25 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
-#include "MenuInterface.h"
+#include "MenuWidget.h"
+
 #include "MainMenu.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROTOTYPESANDBOX_API UMainMenu : public UUserWidget
+class PROTOTYPESANDBOX_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
-public:
-	void SetMenuInterface(IMenuInterface* MenuInterface);
-	void Setup();
-	void OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld) override;
-
 protected:
-	virtual bool Initialize();
+	virtual bool Initialize() override;
 
 private:
 	UFUNCTION()
@@ -30,12 +25,39 @@ private:
 	UFUNCTION()
 	void JoinServer();
 
+	UFUNCTION()
+	void OpenJoinMenu();
+
+	UFUNCTION()
+	void CloseJoinMenu();
+
+	UFUNCTION()
+	void Quit();
+	
 	UPROPERTY(meta = (BindWidget))
 	class UButton* HostButton;
 
 	UPROPERTY(meta = (BindWidget))
+	class UButton* JoinMenuButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* QuitButton;
+	
+	UPROPERTY(meta = (BindWidget))
 	class UButton* JoinButton;
 
-public:
-	IMenuInterface* MenuInterface;
+	UPROPERTY(meta = (BindWidget))
+	class UButton* BackButton;
+	
+	UPROPERTY(meta = (BindWidget))
+	class UWidgetSwitcher* MenuSwitcher;
+
+	UPROPERTY(meta = (BindWidget))
+	class UWidget* MainMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	class UWidget* JoinMenu;
+	
+	UPROPERTY(meta = (BindWidget))
+	class UEditableTextBox* ServerAddressTextBox;
 };

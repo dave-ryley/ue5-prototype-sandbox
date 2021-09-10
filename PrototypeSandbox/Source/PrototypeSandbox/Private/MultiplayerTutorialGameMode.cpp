@@ -7,10 +7,10 @@
 
 AMultiplayerTutorialGameMode::AMultiplayerTutorialGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APlayerController> playerController(TEXT("/Game/Maps/LevelSelect/BP_PlayerControllerBase"));
-	if (playerController.Class != nullptr)
+	static ConstructorHelpers::FClassFinder<APlayerController> PlayerController(TEXT("/Game/Maps/LevelSelect/BP_PlayerControllerBase"));
+	if (PlayerController.Class != nullptr)
 	{
-		PlayerControllerClass = playerController.Class;
+		PlayerControllerClass = PlayerController.Class;
 	}
 }
 
