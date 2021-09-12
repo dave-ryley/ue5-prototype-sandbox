@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <ServerRow.h>
+
 #include "CoreMinimal.h"
 #include "MenuWidget.h"
 
@@ -32,7 +34,7 @@ private:
 	void CloseJoinMenu();
 
 	UFUNCTION()
-	void Quit();
+	void QuitGame();
 	
 	UPROPERTY(meta = (BindWidget))
 	class UButton* HostButton;
@@ -59,5 +61,8 @@ private:
 	class UWidget* JoinMenu;
 	
 	UPROPERTY(meta = (BindWidget))
-	class UEditableTextBox* ServerAddressTextBox;
+	class UPanelWidget* ServerListBox;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UServerRow> ServerRowClass;
 };

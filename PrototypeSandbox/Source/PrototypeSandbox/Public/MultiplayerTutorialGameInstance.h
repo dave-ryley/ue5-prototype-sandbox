@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "MenuInterface.h"
+#include "OnlineSubsystem.h"
 #include "MultiplayerTutorialGameInstance.generated.h"
 
 /**
@@ -17,6 +18,8 @@ class PROTOTYPESANDBOX_API UMultiplayerTutorialGameInstance : public UGameInstan
 
 public:
 
+	virtual void Init() override;
+	
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();
 
@@ -30,7 +33,7 @@ public:
 	virtual void Join(const FString& Address) override;
 
 	UFUNCTION(Exec)
-	virtual void Quit() override;
+	virtual void QuitGame() override;
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> MenuClass;
@@ -38,6 +41,13 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> InGameMenuClass;
 private:
+	IOnlineSessionPtr SessionInterface;
+	
+	void OnSessionCreated(FName SessionName, bool IsSuccessful);
+	void OnSessionDestroyed(FName SessionName, bool IsSuccessful);
+	void OnFindSessionsComplete(bool IsSuccessful);
+
 	class UMainMenu* Menu;
 	class UInGameMenu* InGameMenu;
+	TSharedPtr<class FOnlineSessionSearch> SessionSearch;
 };
