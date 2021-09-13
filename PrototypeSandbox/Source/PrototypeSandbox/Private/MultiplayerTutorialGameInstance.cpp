@@ -25,17 +25,20 @@ void UMultiplayerTutorialGameInstance::Init()
 		SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnSessionCreated);
 		SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnSessionDestroyed);
 		SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnFindSessionsComplete);
-
-		SessionSearch = MakeShareable(new FOnlineSessionSearch());
-		if (SessionSearch.IsValid())
-		{
-			SessionSearch->bIsLanQuery = true;
-			SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
-		}
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found no Online Subsystem"), *Oss->GetSubsystemName().ToString());
+	}
+}
+
+void UMultiplayerTutorialGameInstance::FindSessions()
+{
+	SessionSearch = MakeShareable(new FOnlineSessionSearch());
+	if (SessionSearch.IsValid())
+	{
+		SessionSearch->bIsLanQuery = true;
+		SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
 	}
 }
 
@@ -134,9 +137,12 @@ void UMultiplayerTutorialGameInstance::OnFindSessionsComplete(bool IsSuccessful)
 
 	if (IsSuccessful && SessionSearch.IsValid())
 	{
-		for (const auto& Result : SessionSearch->SearchResults)
+		TArray<FString> ServerNames;
+		ServerNames.Reserve(SessionSearch->SearchResults.Num());
+		for (auto&& Result : SessionSearch->SearchResults)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Found session %s owned by %s"), *Result.Session.GetSessionIdStr(), *Result.Session.OwningUserName);
+			ServerNames.Push(Result.GetSessionIdStr());
 		}
+		Menu->SetServerList(ServerNames);
 	}
 }

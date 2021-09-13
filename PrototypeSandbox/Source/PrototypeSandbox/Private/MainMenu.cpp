@@ -9,6 +9,19 @@
 
 #include "ServerRow.h"
 
+void UMainMenu::SetServerList(TArray<FString> ServerNames)
+{
+	UE_LOG(LogTemp, Warning, TEXT("In SetServerList"));
+	ServerListBox->ClearChildren();
+	for (const auto& Name : ServerNames)
+	{
+		auto* ServerRow = CreateWidget<UServerRow>(this, ServerRowClass);
+		ServerRow->SetServerName(FText::FromString(Name));
+		ServerListBox->AddChild(ServerRow);
+	}
+	ServerListBox->InvalidateLayoutAndVolatility();
+}
+
 bool UMainMenu::Initialize()
 {
 	if (!Super::Initialize()) return false;
@@ -44,17 +57,16 @@ void UMainMenu::JoinServer()
 	if (!ensure(MenuInterface != nullptr)) return;
 
 	// TODO empty string handling
-	// MenuInterface->Join(ServerAddressTextBox->GetText().ToString());
+	MenuInterface->Join("");
 }
 
 void UMainMenu::OpenJoinMenu()
 {
 	if (!ensure(MenuSwitcher != nullptr)) return;
 	if (!ensure(JoinMenu != nullptr)) return;
+	if (!ensure(MenuInterface != nullptr)) return;
 
-	auto* ServerRow = CreateWidget<UServerRow>(this, ServerRowClass);
-	ServerRow->SetServerName(FText::FromString(TEXT("Dave's Fancy Server")));
-	ServerListBox->AddChild(ServerRow);
+	MenuInterface->FindSessions();
 	MenuSwitcher->SetActiveWidget(JoinMenu);
 }
 

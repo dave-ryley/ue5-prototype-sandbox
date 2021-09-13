@@ -19,6 +19,7 @@ class PROTOTYPESANDBOX_API UMultiplayerTutorialGameInstance : public UGameInstan
 public:
 
 	virtual void Init() override;
+	virtual void FindSessions() override;
 	
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();

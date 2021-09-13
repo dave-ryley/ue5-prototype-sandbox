@@ -17,6 +17,8 @@ class PROTOTYPESANDBOX_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
+public:
+	void SetServerList(TArray<FString> ServerNames);
 protected:
 	virtual bool Initialize() override;
 
