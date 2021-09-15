@@ -10,7 +10,7 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 
-const static FName GSESSION_NAME = "My Session Game";
+const static FName GSession_Name = TEXT("My Session Game");
 
 void UMultiplayerTutorialGameInstance::Init()
 {
@@ -25,6 +25,7 @@ void UMultiplayerTutorialGameInstance::Init()
 		SessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnSessionCreated);
 		SessionInterface->OnDestroySessionCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnSessionDestroyed);
 		SessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnFindSessionsComplete);
+		SessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &UMultiplayerTutorialGameInstance::OnJoinSessionComplete);
 	}
 	else
 	{
@@ -64,7 +65,7 @@ void UMultiplayerTutorialGameInstance::Host()
 {
 	if (SessionInterface.IsValid())
 	{
-		const auto ExistingSession = SessionInterface->GetNamedSession(GSESSION_NAME);
+		const auto ExistingSession = SessionInterface->GetNamedSession(GSession_Name);
 		if (ExistingSession)
 		{
 			SessionInterface->DestroySession(ExistingSession->SessionName);
@@ -74,21 +75,24 @@ void UMultiplayerTutorialGameInstance::Host()
 		SessionSettings.bIsLANMatch = true;
 		SessionSettings.NumPublicConnections = 2;
 		SessionSettings.bShouldAdvertise = true;
-		SessionInterface->CreateSession(0, GSESSION_NAME, SessionSettings);
+		SessionInterface->CreateSession(0, GSession_Name, SessionSettings);
 	}
 }
 
-void UMultiplayerTutorialGameInstance::Join(const FString& Address)
+void UMultiplayerTutorialGameInstance::Join(const FOnlineSessionSearchResult& Result)
 {
 	auto* Engine = GetEngine();
 	if (!ensure(Engine != nullptr)) return;
 
-	Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Address));
-
-	auto* PlayerController = GetFirstLocalPlayerController();
-	if (!ensure(PlayerController != nullptr)) return;
-
-	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
+	Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Result.GetSessionIdStr()));
+	if (SessionInterface->JoinSession(0, GSession_Name, Result))
+	{
+		Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Successfully Joined %s"), *Result.GetSessionIdStr()));
+	}
+	else
+	{
+		Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Failed to Joined %s"), *Result.GetSessionIdStr()));
+	}
 }
 
 void UMultiplayerTutorialGameInstance::QuitGame()
@@ -99,7 +103,7 @@ void UMultiplayerTutorialGameInstance::QuitGame()
 	PlayerController->ConsoleCommand("quit");
 }
 
-void UMultiplayerTutorialGameInstance::OnSessionCreated(FName SessionName, bool IsSuccessful)
+void UMultiplayerTutorialGameInstance::OnSessionCreated(const FName SessionName, const bool IsSuccessful)
 {
 	if (IsSuccessful)
 	{
@@ -119,7 +123,7 @@ void UMultiplayerTutorialGameInstance::OnSessionCreated(FName SessionName, bool 
 	}
 }
 
-void UMultiplayerTutorialGameInstance::OnSessionDestroyed(FName SessionName, bool IsSuccessful)
+void UMultiplayerTutorialGameInstance::OnSessionDestroyed(const FName SessionName, const bool IsSuccessful)
 {
 	if (IsSuccessful)
 	{
@@ -131,18 +135,25 @@ void UMultiplayerTutorialGameInstance::OnSessionDestroyed(FName SessionName, boo
 	}
 }
 
-void UMultiplayerTutorialGameInstance::OnFindSessionsComplete(bool IsSuccessful)
+void UMultiplayerTutorialGameInstance::OnFindSessionsComplete(const bool IsSuccessful)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Found sessions %s"), (IsSuccessful ? TEXT("success") : TEXT("failed")));
 
 	if (IsSuccessful && SessionSearch.IsValid())
 	{
-		TArray<FString> ServerNames;
-		ServerNames.Reserve(SessionSearch->SearchResults.Num());
-		for (auto&& Result : SessionSearch->SearchResults)
-		{
-			ServerNames.Push(Result.GetSessionIdStr());
-		}
-		Menu->SetServerList(ServerNames);
+		Menu->SetServerList(SessionSearch->SearchResults);
+	}
+}
+
+void UMultiplayerTutorialGameInstance::OnJoinSessionComplete(FName SessionName,
+	EOnJoinSessionCompleteResult::Type Result)
+{
+	UE_LOG(LogTemp, Warning, TEXT("JoinSession Result: %d"), Result);
+	if (Result == EOnJoinSessionCompleteResult::Type::Success)
+	{
+		FString Address;
+		SessionInterface->GetResolvedConnectString(SessionName, Address);
+ 
+		GetFirstLocalPlayerController()->ClientTravel(Address, TRAVEL_Absolute);
 	}
 }

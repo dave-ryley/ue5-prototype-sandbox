@@ -18,7 +18,7 @@ class PROTOTYPESANDBOX_API UMainMenu : public UMenuWidget
 	GENERATED_BODY()
 
 public:
-	void SetServerList(TArray<FString> ServerNames);
+	void SetServerList(const TArray<class FOnlineSessionSearchResult>& ServerResults);
 protected:
 	virtual bool Initialize() override;
 
@@ -67,4 +67,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UServerRow> ServerRowClass;
+
+	const class FOnlineSessionSearchResult* SelectedSearchResult;
 };

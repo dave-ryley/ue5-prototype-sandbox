@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "MainMenu.h"
+
+#include "OnlineSessionSettings.h"
 #include "Components/Button.h"
 #include "Components/EditableTextBox.h"
 #include "Components/ScrollBox.h"
@@ -9,14 +10,15 @@
 
 #include "ServerRow.h"
 
-void UMainMenu::SetServerList(TArray<FString> ServerNames)
+void UMainMenu::SetServerList(const TArray<FOnlineSessionSearchResult>& ServerResults)
 {
 	UE_LOG(LogTemp, Warning, TEXT("In SetServerList"));
 	ServerListBox->ClearChildren();
-	for (const auto& Name : ServerNames)
+	for (const auto& Result : ServerResults)
 	{
 		auto* ServerRow = CreateWidget<UServerRow>(this, ServerRowClass);
-		ServerRow->SetServerName(FText::FromString(Name));
+		ServerRow->Setup(&Result);
+		ServerRow->SetOnClickedCallback([&](const FOnlineSessionSearchResult& SelectedResult){ this->SelectedSearchResult = &SelectedResult; });
 		ServerListBox->AddChild(ServerRow);
 	}
 	ServerListBox->InvalidateLayoutAndVolatility();
@@ -56,8 +58,15 @@ void UMainMenu::JoinServer()
 {
 	if (!ensure(MenuInterface != nullptr)) return;
 
-	// TODO empty string handling
-	MenuInterface->Join("");
+	if (SelectedSearchResult != nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Selected Server %s."), *SelectedSearchResult->GetSessionIdStr());
+		MenuInterface->Join(*SelectedSearchResult);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SelectedRow not set."));
+	}
 }
 
 void UMainMenu::OpenJoinMenu()

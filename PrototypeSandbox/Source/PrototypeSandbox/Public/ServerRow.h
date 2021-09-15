@@ -16,8 +16,19 @@ class PROTOTYPESANDBOX_API UServerRow : public UUserWidget
 protected:
 	virtual bool Initialize() override;
 public:
-	void SetServerName(const FText NewServerName);
+	void Setup(FOnlineSessionSearchResult const * Result);
+	void SetOnClickedCallback(std::function<void(const class FOnlineSessionSearchResult& )> Callback);
 private:
+
+	UFUNCTION()
+	void OnClicked();
+	
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* ServerNameText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* RowButton;
+	
+	class FOnlineSessionSearchResult const * SessionResult;
+	TOptional<std::function<void(const FOnlineSessionSearchResult&)>> OnClickCallback; 
 };
