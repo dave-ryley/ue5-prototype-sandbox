@@ -22,6 +22,8 @@ public:
 	virtual void Init() override;
 	virtual void FindSessions() override;
 	
+	virtual void CreateSession();
+
 	UFUNCTION(BlueprintCallable)
 	void LoadMenu();
 

@@ -38,8 +38,22 @@ void UMultiplayerTutorialGameInstance::FindSessions()
 	SessionSearch = MakeShareable(new FOnlineSessionSearch());
 	if (SessionSearch.IsValid())
 	{
-		SessionSearch->bIsLanQuery = true;
+		SessionSearch->MaxSearchResults = 100;
+		SessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
 		SessionInterface->FindSessions(0, SessionSearch.ToSharedRef());
+	}
+}
+
+void UMultiplayerTutorialGameInstance::CreateSession()
+{
+	if (SessionInterface.IsValid())
+	{
+		FOnlineSessionSettings SessionSettings;
+		SessionSettings.bIsLANMatch = true;
+		SessionSettings.NumPublicConnections = 2;
+		SessionSettings.bShouldAdvertise = true;
+		SessionSettings.bUsesPresence = true;
+		SessionInterface->CreateSession(0, GSession_Name, SessionSettings);
 	}
 }
 
@@ -71,11 +85,7 @@ void UMultiplayerTutorialGameInstance::Host()
 			SessionInterface->DestroySession(ExistingSession->SessionName);
 			return;
 		}
-		FOnlineSessionSettings SessionSettings;
-		SessionSettings.bIsLANMatch = true;
-		SessionSettings.NumPublicConnections = 2;
-		SessionSettings.bShouldAdvertise = true;
-		SessionInterface->CreateSession(0, GSession_Name, SessionSettings);
+		CreateSession();
 	}
 }
 

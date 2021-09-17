@@ -10,7 +10,7 @@ public class PrototypeSandbox : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] {
 			"Core", "CoreUObject", "Engine", "InputCore",
-			"UMG", "OnlineSubsystem"
+			"UMG", "OnlineSubsystem", "OnlineSubsystemSteam"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
