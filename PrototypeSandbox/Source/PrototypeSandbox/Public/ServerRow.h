@@ -4,22 +4,49 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Button.h"
+#include "Components/TextBlock.h"
 #include "ServerRow.generated.h"
 
+class FOnlineSessionSearchResult;
+
+USTRUCT()
+struct FServerData
+{
+    GENERATED_BODY()
+
+	FServerData();
+	explicit FServerData(const FOnlineSessionSearchResult* Result);
+
+	FString Name;
+	uint16 MaxPlayers;
+    uint16 CurrentPlayers;
+    FString HostUserName;
+};
 /**
  * 
  */
 UCLASS()
 class PROTOTYPESANDBOX_API UServerRow : public UUserWidget
 {
+	using FCallbackFunc = std::function<void(UServerRow*)>;
 	GENERATED_BODY()
 protected:
 	virtual bool Initialize() override;
 public:
-	void Setup(FOnlineSessionSearchResult const * Result);
-	void SetOnClickedCallback(std::function<void(const class FOnlineSessionSearchResult& )> Callback);
+	void SetIsSelected(bool IsSelected);
+
+	UFUNCTION(BlueprintGetter)
+	bool IsRowSelected() const;
+	void Setup(const FOnlineSessionSearchResult * Result);
+
+	const FOnlineSessionSearchResult* GetSearchResult() const;
+	void SetOnClickedCallback(FCallbackFunc Callback);
 private:
 
+	UPROPERTY(BlueprintGetter=IsRowSelected)
+	bool bIsSelected;
+	
 	UFUNCTION()
 	void OnClicked();
 	
@@ -27,8 +54,15 @@ private:
 	class UTextBlock* ServerNameText;
 
 	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* ServerOwnerText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* ServerParticipantsText;
+	
+	UPROPERTY(meta = (BindWidget))
 	class UButton* RowButton;
 	
-	class FOnlineSessionSearchResult const * SessionResult;
-	TOptional<std::function<void(const FOnlineSessionSearchResult&)>> OnClickCallback; 
+	FOnlineSessionSearchResult const * SessionResult;
+	FServerData ServerData;
+	TOptional<FCallbackFunc> OnClickCallback;
 };

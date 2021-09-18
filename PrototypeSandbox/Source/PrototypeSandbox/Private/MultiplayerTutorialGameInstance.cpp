@@ -10,7 +10,7 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 
-const static FName GSession_Name = TEXT("My Session Game");
+const static FName GSession_Name = TEXT("DavidRyanSession");
 
 void UMultiplayerTutorialGameInstance::Init()
 {
@@ -49,7 +49,7 @@ void UMultiplayerTutorialGameInstance::CreateSession()
 	if (SessionInterface.IsValid())
 	{
 		FOnlineSessionSettings SessionSettings;
-		SessionSettings.bIsLANMatch = true;
+		SessionSettings.bIsLANMatch = false;
 		SessionSettings.NumPublicConnections = 2;
 		SessionSettings.bShouldAdvertise = true;
 		SessionSettings.bUsesPresence = true;

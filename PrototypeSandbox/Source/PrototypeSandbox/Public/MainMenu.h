@@ -69,4 +69,5 @@ private:
 	TSubclassOf<UServerRow> ServerRowClass;
 
 	const class FOnlineSessionSearchResult* SelectedSearchResult;
+	UServerRow* CurrentlySelectedRow;
 };

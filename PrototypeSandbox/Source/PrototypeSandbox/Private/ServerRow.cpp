@@ -7,6 +7,22 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 
+FServerData::FServerData()
+	:	Name(FString(TEXT("Unknown"))),
+		CurrentPlayers(0),
+		MaxPlayers(0),
+		HostUserName(TEXT("Unknown"))
+{
+}
+
+FServerData::FServerData(const FOnlineSessionSearchResult* Result)
+	:	Name(Result->GetSessionIdStr()),
+		MaxPlayers(Result->Session.SessionSettings.NumPublicConnections),
+		CurrentPlayers(MaxPlayers - Result->Session.NumOpenPublicConnections),
+		HostUserName(Result->Session.OwningUserName)
+{
+}
+
 bool UServerRow::Initialize()
 {
 	if (!Super::Initialize()) return false;
@@ -17,13 +33,34 @@ bool UServerRow::Initialize()
 	return true;
 }
 
-void UServerRow::Setup(FOnlineSessionSearchResult const* Result)
+void UServerRow::SetIsSelected(const bool IsSelected)
 {
-	SessionResult = Result;
-	ServerNameText->SetText(FText::FromString(SessionResult->GetSessionIdStr()));
+	bIsSelected = IsSelected;
 }
 
-void UServerRow::SetOnClickedCallback(const std::function<void(const FOnlineSessionSearchResult&)> Callback)
+bool UServerRow::IsRowSelected() const
+{
+	return bIsSelected;
+}
+
+void UServerRow::Setup(const FOnlineSessionSearchResult* Result)
+{
+	if (!ensure(Result != nullptr)) return;
+
+	SessionResult = Result;
+	ServerData = FServerData(Result);
+	ServerNameText->SetText(FText::FromString(ServerData.Name));
+	ServerOwnerText->SetText(FText::FromString(ServerData.HostUserName));
+	FString ParticipantsText = ServerData.CurrentPlayers + TEXT("/") + ServerData.MaxPlayers;
+	ServerParticipantsText->SetText(FText::FromString(MoveTemp(ParticipantsText)));
+}
+
+const FOnlineSessionSearchResult* UServerRow::GetSearchResult() const
+{
+	return SessionResult;
+}
+
+void UServerRow::SetOnClickedCallback(const FCallbackFunc Callback)
 {
 	OnClickCallback = Callback;
 }
@@ -33,6 +70,6 @@ void UServerRow::OnClicked()
 	if (OnClickCallback.IsSet() && SessionResult != nullptr)
 	{
 		const auto& Callback = OnClickCallback.GetValue();
-		Callback(*SessionResult);
+		Callback(this);
 	}
 }

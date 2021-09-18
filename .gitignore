@@ -1,6 +1,9 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Packaged builds
+Packaged/
+
 # Precompiled Assets
 SourceArt/**/*.png
 SourceArt/**/*.tga

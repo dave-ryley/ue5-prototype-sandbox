@@ -14,11 +14,20 @@ void UMainMenu::SetServerList(const TArray<FOnlineSessionSearchResult>& ServerRe
 {
 	UE_LOG(LogTemp, Warning, TEXT("In SetServerList"));
 	ServerListBox->ClearChildren();
+
 	for (const auto& Result : ServerResults)
 	{
 		auto* ServerRow = CreateWidget<UServerRow>(this, ServerRowClass);
 		ServerRow->Setup(&Result);
-		ServerRow->SetOnClickedCallback([&](const FOnlineSessionSearchResult& SelectedResult){ this->SelectedSearchResult = &SelectedResult; });
+		ServerRow->SetOnClickedCallback([&](UServerRow* SelectedRow)
+		{
+			if (CurrentlySelectedRow)
+			{
+				CurrentlySelectedRow->SetIsSelected(false);
+			}
+			CurrentlySelectedRow = SelectedRow;
+			CurrentlySelectedRow->SetIsSelected(true);
+		});
 		ServerListBox->AddChild(ServerRow);
 	}
 	ServerListBox->InvalidateLayoutAndVolatility();
