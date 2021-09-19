@@ -68,7 +68,6 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* RowButton;
 	
-	FOnlineSessionSearchResult const * SessionResult;
 	FServerData ServerData;
 	TOptional<FCallbackFunc> OnClickCallback;
 };

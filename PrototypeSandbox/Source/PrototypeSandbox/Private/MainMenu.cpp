@@ -22,6 +22,7 @@ void UMainMenu::SetServerList(const TArray<FServerData>& ServerData)
 		ServerRow->Setup(Data);
 		ServerRow->SetOnClickedCallback([&](UServerRow* SelectedRow)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Settings CurrentlySelectedRow"));
 			if (CurrentlySelectedRow)
 			{
 				CurrentlySelectedRow->SetIsSelected(false);
@@ -78,6 +79,7 @@ void UMainMenu::JoinServer()
 {
 	if (!ensure(MenuInterface != nullptr)) return;
 
+	auto SelectedSearchResult = CurrentlySelectedRow->GetSearchResult();
 	if (SelectedSearchResult != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Selected Server %s."), *SelectedSearchResult->GetSessionIdStr());

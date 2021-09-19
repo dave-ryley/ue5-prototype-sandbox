@@ -71,14 +71,15 @@ void UServerRow::UpdateText()
 {
 	ServerNameText->SetText(FText::FromString(ServerData.Name));
 	ServerOwnerText->SetText(FText::FromString(ServerData.HostUserName));
-	FString ParticipantsText = ServerData.CurrentPlayers + TEXT("/") + ServerData.MaxPlayers;
+	FString ParticipantsText = FString::Printf(TEXT("%d/%d"), ServerData.CurrentPlayers, ServerData.MaxPlayers);
 	ServerParticipantsText->SetText(FText::FromString(MoveTemp(ParticipantsText)));
 }
 
 void UServerRow::OnClicked()
 {
-	if (OnClickCallback.IsSet() && SessionResult != nullptr)
+	if (OnClickCallback.IsSet() && GetSearchResult() != nullptr)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("In OnClickCallback"));
 		const auto& Callback = OnClickCallback.GetValue();
 		Callback(this);
 	}

@@ -86,6 +86,5 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UServerRow> ServerRowClass;
 
-	const class FOnlineSessionSearchResult* SelectedSearchResult;
 	UServerRow* CurrentlySelectedRow;
 };
