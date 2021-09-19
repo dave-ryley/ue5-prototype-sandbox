@@ -9,16 +9,17 @@
 #include "Components/WidgetSwitcher.h"
 
 #include "ServerRow.h"
+#include "Components/EditableText.h"
 
-void UMainMenu::SetServerList(const TArray<FOnlineSessionSearchResult>& ServerResults)
+void UMainMenu::SetServerList(const TArray<FServerData>& ServerData)
 {
 	UE_LOG(LogTemp, Warning, TEXT("In SetServerList"));
 	ServerListBox->ClearChildren();
 
-	for (const auto& Result : ServerResults)
+	for (const auto& Data : ServerData)
 	{
 		auto* ServerRow = CreateWidget<UServerRow>(this, ServerRowClass);
-		ServerRow->Setup(&Result);
+		ServerRow->Setup(Data);
 		ServerRow->SetOnClickedCallback([&](UServerRow* SelectedRow)
 		{
 			if (CurrentlySelectedRow)
@@ -33,6 +34,13 @@ void UMainMenu::SetServerList(const TArray<FOnlineSessionSearchResult>& ServerRe
 	ServerListBox->InvalidateLayoutAndVolatility();
 }
 
+FString UMainMenu::GetHostServerName() const
+{
+	if (!ensure(ServerNameEditableText != nullptr)) return "";
+
+	return ServerNameEditableText->GetText().ToString();
+}
+
 bool UMainMenu::Initialize()
 {
 	if (!Super::Initialize()) return false;
@@ -42,7 +50,8 @@ bool UMainMenu::Initialize()
 	if (!ensure(QuitButton != nullptr)) return false;
 	if (!ensure(MainMenu != nullptr)) return false;
 	if (!ensure(JoinMenu != nullptr)) return false;
-	if (!ensure(BackButton != nullptr)) return false;
+	if (!ensure(JoinBackButton != nullptr)) return false;
+	if (!ensure(HostBackButton != nullptr)) return false;
 	if (!ensure(JoinMenuButton != nullptr)) return false;
 	if (!ensure(ServerListBox != nullptr)) return false;
 	if (!ensure(ServerRowClass != nullptr)) return false;
@@ -50,7 +59,9 @@ bool UMainMenu::Initialize()
 	HostButton->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
 	JoinButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
 	QuitButton->OnClicked.AddDynamic(this, &UMainMenu::QuitGame);
-	BackButton->OnClicked.AddDynamic(this, &UMainMenu::CloseJoinMenu);
+	HostBackButton->OnClicked.AddDynamic(this, &UMainMenu::CloseSubMenu);
+	JoinBackButton->OnClicked.AddDynamic(this, &UMainMenu::CloseSubMenu);
+	HostMenuButton->OnClicked.AddDynamic(this, &UMainMenu::OpenHostMenu);
 	JoinMenuButton->OnClicked.AddDynamic(this, &UMainMenu::OpenJoinMenu);
 
 	return true;
@@ -78,17 +89,24 @@ void UMainMenu::JoinServer()
 	}
 }
 
+void UMainMenu::OpenHostMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr)) return;
+	if (!ensure(HostMenu != nullptr)) return;
+
+	MenuSwitcher->SetActiveWidget(HostMenu);
+}
+
 void UMainMenu::OpenJoinMenu()
 {
 	if (!ensure(MenuSwitcher != nullptr)) return;
 	if (!ensure(JoinMenu != nullptr)) return;
-	if (!ensure(MenuInterface != nullptr)) return;
 
 	MenuInterface->FindSessions();
 	MenuSwitcher->SetActiveWidget(JoinMenu);
 }
 
-void UMainMenu::CloseJoinMenu()
+void UMainMenu::CloseSubMenu()
 {
 	if (!ensure(MenuSwitcher != nullptr)) return;
 	if (!ensure(MainMenu != nullptr)) return;

@@ -11,7 +11,8 @@ FServerData::FServerData()
 	:	Name(FString(TEXT("Unknown"))),
 		CurrentPlayers(0),
 		MaxPlayers(0),
-		HostUserName(TEXT("Unknown"))
+		HostUserName(TEXT("Unknown")),
+		SourceResult(nullptr)
 {
 }
 
@@ -19,7 +20,8 @@ FServerData::FServerData(const FOnlineSessionSearchResult* Result)
 	:	Name(Result->GetSessionIdStr()),
 		MaxPlayers(Result->Session.SessionSettings.NumPublicConnections),
 		CurrentPlayers(MaxPlayers - Result->Session.NumOpenPublicConnections),
-		HostUserName(Result->Session.OwningUserName)
+		HostUserName(Result->Session.OwningUserName),
+		SourceResult(Result)
 {
 }
 
@@ -43,26 +45,34 @@ bool UServerRow::IsRowSelected() const
 	return bIsSelected;
 }
 
-void UServerRow::Setup(const FOnlineSessionSearchResult* Result)
+void UServerRow::Setup(const FServerData& Data)
 {
-	if (!ensure(Result != nullptr)) return;
+	ServerData = Data;
+	UpdateText();
+}
 
-	SessionResult = Result;
-	ServerData = FServerData(Result);
-	ServerNameText->SetText(FText::FromString(ServerData.Name));
-	ServerOwnerText->SetText(FText::FromString(ServerData.HostUserName));
-	FString ParticipantsText = ServerData.CurrentPlayers + TEXT("/") + ServerData.MaxPlayers;
-	ServerParticipantsText->SetText(FText::FromString(MoveTemp(ParticipantsText)));
+void UServerRow::Setup(FServerData&& Data)
+{
+	ServerData = MoveTemp(Data);
+	UpdateText();
 }
 
 const FOnlineSessionSearchResult* UServerRow::GetSearchResult() const
 {
-	return SessionResult;
+	return ServerData.SourceResult;
 }
 
 void UServerRow::SetOnClickedCallback(const FCallbackFunc Callback)
 {
 	OnClickCallback = Callback;
+}
+
+void UServerRow::UpdateText()
+{
+	ServerNameText->SetText(FText::FromString(ServerData.Name));
+	ServerOwnerText->SetText(FText::FromString(ServerData.HostUserName));
+	FString ParticipantsText = ServerData.CurrentPlayers + TEXT("/") + ServerData.MaxPlayers;
+	ServerParticipantsText->SetText(FText::FromString(MoveTemp(ParticipantsText)));
 }
 
 void UServerRow::OnClicked()

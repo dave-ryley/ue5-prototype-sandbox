@@ -22,6 +22,10 @@ struct FServerData
 	uint16 MaxPlayers;
     uint16 CurrentPlayers;
     FString HostUserName;
+private:
+	const class FOnlineSessionSearchResult* SourceResult;
+
+	friend class UServerRow;
 };
 /**
  * 
@@ -38,12 +42,14 @@ public:
 
 	UFUNCTION(BlueprintGetter)
 	bool IsRowSelected() const;
-	void Setup(const FOnlineSessionSearchResult * Result);
+	void Setup(const FServerData& Data);
+	void Setup(FServerData&& Data);
 
 	const FOnlineSessionSearchResult* GetSearchResult() const;
 	void SetOnClickedCallback(FCallbackFunc Callback);
 private:
-
+	void UpdateText();
+	
 	UPROPERTY(BlueprintGetter=IsRowSelected)
 	bool bIsSelected;
 	

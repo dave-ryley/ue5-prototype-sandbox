@@ -18,7 +18,10 @@ class PROTOTYPESANDBOX_API UMainMenu : public UMenuWidget
 	GENERATED_BODY()
 
 public:
-	void SetServerList(const TArray<class FOnlineSessionSearchResult>& ServerResults);
+	void SetServerList(const TArray<struct FServerData>& ServerData);
+
+	UFUNCTION(BlueprintCallable)
+	FString GetHostServerName() const;
 protected:
 	virtual bool Initialize() override;
 
@@ -30,28 +33,40 @@ private:
 	void JoinServer();
 
 	UFUNCTION()
-	void OpenJoinMenu();
+	void OpenHostMenu();
 
 	UFUNCTION()
-	void CloseJoinMenu();
+	void OpenJoinMenu();
+	
+	UFUNCTION()
+	void CloseSubMenu();
 
 	UFUNCTION()
 	void QuitGame();
 	
 	UPROPERTY(meta = (BindWidget))
-	class UButton* HostButton;
+	class UButton* HostMenuButton;
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* JoinMenuButton;
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* QuitButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* HostButton;
 	
 	UPROPERTY(meta = (BindWidget))
 	class UButton* JoinButton;
 
 	UPROPERTY(meta = (BindWidget))
-	class UButton* BackButton;
+	class UButton* HostBackButton;
+	
+	UPROPERTY(meta = (BindWidget))
+	class UButton* JoinBackButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UEditableText* ServerNameEditableText;
 	
 	UPROPERTY(meta = (BindWidget))
 	class UWidgetSwitcher* MenuSwitcher;
@@ -61,6 +76,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	class UWidget* JoinMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	class UWidget* HostMenu;
 	
 	UPROPERTY(meta = (BindWidget))
 	class UPanelWidget* ServerListBox;

@@ -11,6 +11,7 @@
 #include "InGameMenu.h"
 
 const static FName GSession_Name = TEXT("DavidRyanSession");
+const static FName GServer_Name_Settings_Key = TEXT("ServerName");
 
 void UMultiplayerTutorialGameInstance::Init()
 {
@@ -53,6 +54,8 @@ void UMultiplayerTutorialGameInstance::CreateSession()
 		SessionSettings.NumPublicConnections = 2;
 		SessionSettings.bShouldAdvertise = true;
 		SessionSettings.bUsesPresence = true;
+		SessionSettings.Set(GServer_Name_Settings_Key, Menu->GetHostServerName(),
+			EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 		SessionInterface->CreateSession(0, GSession_Name, SessionSettings);
 	}
 }
@@ -151,7 +154,15 @@ void UMultiplayerTutorialGameInstance::OnFindSessionsComplete(const bool IsSucce
 
 	if (IsSuccessful && SessionSearch.IsValid())
 	{
-		Menu->SetServerList(SessionSearch->SearchResults);
+		TArray<FServerData> ServerData;
+		for (const auto& Result : SessionSearch->SearchResults)
+		{
+			const auto Index = ServerData.Emplace(&Result);
+			FString ServerName;
+			Result.Session.SessionSettings.Get(GServer_Name_Settings_Key, ServerName);
+			ServerData[Index].Name = ServerName;
+		}
+		Menu->SetServerList(ServerData);
 	}
 }
 
