@@ -10,7 +10,6 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 
-const static FName GSession_Name = TEXT("DavidRyanSession");
 const static FName GServer_Name_Settings_Key = TEXT("ServerName");
 
 void UMultiplayerTutorialGameInstance::Init()
@@ -50,13 +49,13 @@ void UMultiplayerTutorialGameInstance::CreateSession()
 	if (SessionInterface.IsValid())
 	{
 		FOnlineSessionSettings SessionSettings;
-		SessionSettings.bIsLANMatch = false;
+		SessionSettings.bIsLANMatch = (IOnlineSubsystem::Get()->GetSubsystemName() == "NULL");
 		SessionSettings.NumPublicConnections = 2;
 		SessionSettings.bShouldAdvertise = true;
 		SessionSettings.bUsesPresence = true;
 		SessionSettings.Set(GServer_Name_Settings_Key, Menu->GetHostServerName(),
 			EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
-		SessionInterface->CreateSession(0, GSession_Name, SessionSettings);
+		SessionInterface->CreateSession(0, NAME_GameSession, SessionSettings);
 	}
 }
 
@@ -82,7 +81,7 @@ void UMultiplayerTutorialGameInstance::Host()
 {
 	if (SessionInterface.IsValid())
 	{
-		const auto ExistingSession = SessionInterface->GetNamedSession(GSession_Name);
+		const auto ExistingSession = SessionInterface->GetNamedSession(NAME_GameSession);
 		if (ExistingSession)
 		{
 			SessionInterface->DestroySession(ExistingSession->SessionName);
@@ -98,7 +97,7 @@ void UMultiplayerTutorialGameInstance::Join(const FOnlineSessionSearchResult& Re
 	if (!ensure(Engine != nullptr)) return;
 
 	Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Joining %s"), *Result.GetSessionIdStr()));
-	if (SessionInterface->JoinSession(0, GSession_Name, Result))
+	if (SessionInterface->JoinSession(0, NAME_GameSession, Result))
 	{
 		Engine->AddOnScreenDebugMessage(0, 2, FColor::Green, FString::Printf(TEXT("Successfully Joined %s"), *Result.GetSessionIdStr()));
 	}
