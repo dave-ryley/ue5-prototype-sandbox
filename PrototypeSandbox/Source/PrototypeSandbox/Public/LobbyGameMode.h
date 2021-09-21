@@ -14,7 +14,7 @@ class PROTOTYPESANDBOX_API ALobbyGameMode : public AMultiplayerTutorialGameMode
 {
 	GENERATED_BODY()
 public:
-
+	ALobbyGameMode();
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 	virtual void Logout(AController* Exiting) override;
 	virtual void BeginPlay() override;

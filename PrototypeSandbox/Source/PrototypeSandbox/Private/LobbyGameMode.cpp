@@ -3,6 +3,11 @@
 
 #include "LobbyGameMode.h"
 
+ALobbyGameMode::ALobbyGameMode()
+{
+	bUseSeamlessTravel = true;
+}
+
 void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
@@ -15,7 +20,7 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 		auto* World = GetWorld();
 		if (!ensure(World != nullptr)) return;
 
-		World->ServerTravel("/Game/Maps/MultiplayerTutorial/Map_MultiplayerTutorial_Lobby?listen");
+		World->ServerTravel("/Game/Maps/MultiplayerTutorial/Map_MultiplayerTutorial?listen");
 	}
 }
 
