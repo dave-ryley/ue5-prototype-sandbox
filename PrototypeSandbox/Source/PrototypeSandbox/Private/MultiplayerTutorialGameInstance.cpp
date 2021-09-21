@@ -128,7 +128,7 @@ void UMultiplayerTutorialGameInstance::OnSessionCreated(const FName SessionName,
 		auto* World = GetWorld();
 		if (!ensure(World != nullptr)) return;
 
-		World->ServerTravel("/Game/Maps/MultiplayerTutorial/Map_MultiplayerTutorial?listen");
+		World->ServerTravel("/Game/Maps/MultiplayerTutorial/Map_MultiplayerTutorial_Lobby?listen");
 	}
 	else
 	{

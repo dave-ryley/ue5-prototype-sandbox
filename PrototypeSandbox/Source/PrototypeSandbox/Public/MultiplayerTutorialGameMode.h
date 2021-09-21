@@ -13,9 +13,9 @@ UCLASS()
 class PROTOTYPESANDBOX_API AMultiplayerTutorialGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
+	
+public:
 	AMultiplayerTutorialGameMode();
 
-public:
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
 };

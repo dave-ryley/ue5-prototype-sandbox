@@ -78,9 +78,9 @@ void UMainMenu::HostServer()
 void UMainMenu::JoinServer()
 {
 	if (!ensure(MenuInterface != nullptr)) return;
+	if (!ensure(CurrentlySelectedRow != nullptr)) return;
 
-	auto SelectedSearchResult = CurrentlySelectedRow->GetSearchResult();
-	if (SelectedSearchResult != nullptr)
+	if (auto SelectedSearchResult = CurrentlySelectedRow->GetSearchResult(); SelectedSearchResult != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Selected Server %s."), *SelectedSearchResult->GetSessionIdStr());
 		MenuInterface->Join(*SelectedSearchResult);
