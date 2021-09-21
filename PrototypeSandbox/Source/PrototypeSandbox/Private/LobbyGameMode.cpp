@@ -12,6 +12,10 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 	if (NumPlayers.Load() == 2)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Reached 2 players"));
+		auto* World = GetWorld();
+		if (!ensure(World != nullptr)) return;
+
+		World->ServerTravel("/Game/Maps/MultiplayerTutorial/Map_MultiplayerTutorial_Lobby?listen");
 	}
 }
 
